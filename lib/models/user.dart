@@ -78,7 +78,7 @@ class User {
     return email;
   }
 
-  String get name => "${_firstName.capitalize2()} ${_lastName.capitalize2()}";
+  String get name => "${"".capitalize(_firstName)} ${"".capitalize(_lastName)}";
 
   static String _getLastName(String userName) => userName.split(" ").last;
   static String _getFirstName(String userName) => userName.split(" ").first;
