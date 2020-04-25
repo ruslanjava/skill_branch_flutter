@@ -2,7 +2,7 @@ import '../string_util.dart';
 
 enum LoginType { email, phone }
 
-class User {
+class User with UserUtils {
 
   String email;
   String phone;
@@ -78,7 +78,7 @@ class User {
     return email;
   }
 
-  String get name => "${"".capitalize(_firstName)} ${"".capitalize(_lastName)}";
+  String get name => "${capitalize(_firstName)} ${capitalize(_lastName)}";
 
   static String _getLastName(String userName) => userName.split(" ").last;
   static String _getFirstName(String userName) => userName.split(" ").first;
