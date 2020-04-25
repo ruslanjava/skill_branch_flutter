@@ -57,4 +57,14 @@ class UserHolder {
     throw Exception("${user.login} is not a friend of the login");
   }
 
+  List<User> importUsers(List<String> listString) {
+    return listString.map((s) {
+      List<String> list = s.split(";");
+      var name = list[0].trim();
+      var email = list[1].trim();
+      var phone = list[2].trim();
+      return User(name: name, email: email, phone: phone);
+    }).toList();
+  }
+
 }
