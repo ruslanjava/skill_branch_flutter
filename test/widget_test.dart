@@ -23,7 +23,6 @@ void main() {
     expect("Skill Branch", holder.users["kaparray@gmail.com"].name);
   });
 
-  /*
   test('getUserByLogin', () {
     User user = User(name: "Dan Tot", phone: "+15750761449", email: "dan.tot@yandex.ru");
     holder.users[user.login] = user;
@@ -137,5 +136,5 @@ void main() {
     expect(users[0].email, user.email);
     expect(users[0].phone, user.phone);
   });
-   */
+
 }

@@ -1,17 +1,60 @@
 
 import 'models/user.dart';
-import 'string_utils.dart';
+import 'models/user.dart';
+import 'models/user.dart';
 
 class UserHolder {
   Map<String, User> users = {};
 
   void registerUser(String name, String phone, String email) {
     User user = User(name: name, phone: phone, email: email);
-    if (!users.containsKey(user.login)) {
-      users[user.login] = user;
-    } else {
+
+    if (users.containsKey(user.login)) {
       throw Exception('A user with this name already exists');
     }
+
+    users[user.login] = user;
+  }
+
+  User getUserByLogin(String login) {
+    return users[login];
+  }
+
+  User registerUserByPhone(String fullName, String phone) {
+    User user = User.withPhone(name: fullName, phone: phone);
+
+    if (users.containsKey(user.login)) {
+      throw Exception('A user with this phone already exists');
+    }
+
+    users[user.login] = user;
+    return user;
+  }
+
+  User registerUserByEmail(String fullName, String email) {
+    User user = User.withEmail(name: fullName, email: email);
+
+    if (users.containsKey(user.login)) {
+      throw Exception('A user with this email already exists');
+    }
+
+    users[user.login] = user;
+    return user;
+  }
+
+  void setFriends(String login, List<User> friends) {
+    User user = users[login];
+    user.friends = friends;
+  }
+
+  User findUserInFriends(String login, User friendToFind) {
+    User user = users[login];
+    for (var friend in user.friends) {
+      if (friend == friendToFind) {
+        return friend;
+      }
+    }
+    throw Exception("${user.login} is not a friend of the login");
   }
 
 }
