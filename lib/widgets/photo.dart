@@ -2,9 +2,12 @@ import 'package:FlutterGalleryApp/res/res.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+const String kFlutterDash =
+    'https://flutter.dev/assets/404/dash_nest-c64796b59b65042a2b40fae5764c13b7477a592db79eaf04c86298dcb75b78ea.png';
+
 class Photo extends StatelessWidget {
 
-  Photo({Key key, this.photoLink}) : super(key: key);
+  Photo({this.photoLink, Key key}) : super(key: key);
 
   final String photoLink;
 

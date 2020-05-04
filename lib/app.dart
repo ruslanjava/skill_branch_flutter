@@ -1,6 +1,5 @@
+import 'package:FlutterGalleryApp/screens/photo_screen.dart';
 import 'package:flutter/material.dart';
-
-import 'screens/feed_screen.dart';
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -12,7 +11,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Feed(),
+      home: FullScreenImage(
+        altDescription: 'Beautiful girl in a yellow dress with a flower on her head in the summer in the forest',
+        name: 'Dianne Miles',
+        userName: '@Dianne Miles',
+      ),
     );
   }
 }
