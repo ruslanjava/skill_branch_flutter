@@ -2,6 +2,8 @@ import 'package:FlutterGalleryApp/res/res.dart';
 import 'package:FlutterGalleryApp/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
+import 'photo_screen.dart';
+
 class Feed extends StatefulWidget {
 
   Feed({Key key}) : super(key: key);
@@ -22,7 +24,7 @@ class _FeedState extends State<Feed> {
             itemCount: 10,
             itemBuilder: (BuildContext context, int index) {
               return Column(children: <Widget>[
-                _buildItem(),
+                _buildItem(index),
                 Divider(thickness: 2, color: AppColors.mercury),
               ]);
             }
@@ -30,11 +32,24 @@ class _FeedState extends State<Feed> {
     );
   }
 
-  Widget _buildItem() {
+  Widget _buildItem(int index) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Photo(photoLink: kFlutterDash),
+        GestureDetector(
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(
+                builder: (context) => FullScreenImage(
+                  altDescription: 'This is Flutter dash. I love him :)',
+                  name: 'Kirill Adeshchennko',
+                  userName: 'kaparray',
+                  heroTag: "$index",
+                )
+              )
+            );
+          },
+          child: Hero(tag: "$index", child: Photo(photoLink: kFlutterDash))
+        ),
         _buildPhotoMeta(),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
