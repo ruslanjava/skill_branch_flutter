@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 
 class FullScreenImage extends StatefulWidget {
 
-  FullScreenImage({Key key, this.altDescription, this.name, this.userName, this.heroTag})
+  FullScreenImage({Key key, this.photo, this.altDescription, this.name, this.userName, this.heroTag})
       : super(key: key);
 
+  final String photo;
   final String altDescription;
   final String userName;
   final String name;
@@ -22,6 +23,7 @@ class FullScreenImage extends StatefulWidget {
 
 class _FullScreenImageState extends State<FullScreenImage> {
 
+  String photo;
   String name;
   String userName;
   String altDescription;
@@ -30,6 +32,7 @@ class _FullScreenImageState extends State<FullScreenImage> {
   @override
   void initState() {
     super.initState();
+    photo = widget.photo != null ? widget.photo : kFlutterDash;
     name = widget.name != null ? widget.name : '';
     userName = widget.userName != null ? '@' + widget.userName : '';
     altDescription = widget.altDescription != null ? widget.altDescription : '';
@@ -60,7 +63,7 @@ class _FullScreenImageState extends State<FullScreenImage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Hero(tag: "$heroTag", child: Photo(photoLink: kFlutterDash)),
+        Hero(tag: "$heroTag", child: Photo(photoLink: photo)),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           child: Text(altDescription,
