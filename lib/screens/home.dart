@@ -16,7 +16,7 @@ class _HomeState extends State<Home> {
   int currentTab = 0;
 
   List<Widget> pages = [
-    Feed(),
+    Feed(key: PageStorageKey('FeedPage')),
     Container(),
     Container(),
   ];
@@ -32,12 +32,13 @@ class _HomeState extends State<Home> {
             currentTab = index;
           });
         },
+        currentTab: currentTab,
         items: [
           BottomNavyBarItem(
               asset: AppIcons.home,
               title: Text('Feed'),
               activeColor: AppColors.dodgerBlue,
-              inactiveColor: AppColors.manatee
+              inactiveColor: AppColors.manatee,
           ),
           BottomNavyBarItem(
               asset: AppIcons.home,
@@ -150,10 +151,11 @@ class _ItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
+      width: isSelected ? 150 : (MediaQuery.of(context).size.width - 150 - 8 * 4 - 4 * 2) / 2,
+      height: double.maxFinite,
+      curve: curve,
       duration: animationDuration,
       padding: const EdgeInsets.symmetric(horizontal: 8),
-      width: isSelected ? 150 : (MediaQuery.of(context).size.width - 150 - 8 * 4 - 4 * 2) / 2,
-      curve: curve,
       decoration: BoxDecoration(
         color: isSelected ? item.activeColor.withOpacity(0.2) : backgroundColor,
         borderRadius: BorderRadius.circular(itemCornerRadius),
