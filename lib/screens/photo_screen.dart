@@ -5,7 +5,13 @@ import 'package:flutter/material.dart';
 
 class FullScreenImage extends StatefulWidget {
 
-  FullScreenImage({Key key, this.photo, this.altDescription, this.name, this.userName, this.heroTag})
+  FullScreenImage(
+      {Key key,
+      this.photo,
+      this.altDescription,
+      this.name,
+      this.userName,
+      this.heroTag})
       : super(key: key);
 
   final String photo;
@@ -21,13 +27,19 @@ class FullScreenImage extends StatefulWidget {
 
 }
 
-class _FullScreenImageState extends State<FullScreenImage> {
+class _FullScreenImageState extends State<FullScreenImage>
+    with TickerProviderStateMixin {
 
   String photo;
   String name;
   String userName;
   String altDescription;
   String heroTag;
+
+  AnimationController controller;
+
+  Animation<double> userOpacity;
+  Animation<double> columnOpacity;
 
   @override
   void initState() {
@@ -37,22 +49,41 @@ class _FullScreenImageState extends State<FullScreenImage> {
     userName = widget.userName != null ? '@' + widget.userName : '';
     altDescription = widget.altDescription != null ? widget.altDescription : '';
     heroTag = widget.heroTag;
+
+    controller = AnimationController(
+      duration: const Duration(milliseconds: 1500),
+      vsync: this,
+    );
+
+    userOpacity = Tween<double>(begin: 0, end: 1).animate(
+        CurvedAnimation(parent: controller, curve: Interval(0.0, 0.5, curve: Curves.ease))
+    );
+
+    columnOpacity = Tween<double>(begin: 0, end: 1).animate(
+        CurvedAnimation(parent: controller, curve: Interval(0.5, 1.0, curve: Curves.ease))
+    );
+
+    controller.forward().orCancel;
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        title: Text('Photo',
-          style: AppStyles.h2Black.copyWith(fontWeight: FontWeight.bold)
-        ),
-        leading: IconButton(
-          icon: Icon(CupertinoIcons.back, color: AppColors.grayChateau),
-          onPressed: () => Navigator.of(context).pop(true),
-        )
-      ),
+          backgroundColor: Colors.white,
+          centerTitle: true,
+          title: Text('Photo',
+              style: AppStyles.h2Black.copyWith(fontWeight: FontWeight.bold)),
+          leading: IconButton(
+            icon: Icon(CupertinoIcons.back, color: AppColors.grayChateau),
+            onPressed: () => Navigator.of(context).pop(true),
+          )),
       body: Column(children: <Widget>[
         _buildItem(),
       ]),
@@ -78,28 +109,42 @@ class _FullScreenImageState extends State<FullScreenImage> {
   }
 
   Widget _buildPhotoMeta() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              UserAvatar('https://skill-branch.ru/img/speakers/Adechenko.jpg'),
-              SizedBox(width: 6),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(name, style: AppStyles.h2Black),
-                  Text(userName,
-                      style:
-                      AppStyles.h5Black.copyWith(color: AppColors.manatee)),
-                ],
-              )
-            ],
-          ),
-        ],
-      ),
+      return Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                AnimatedBuilder(
+                  animation: controller,
+                  child: UserAvatar('https://skill-branch.ru/img/speakers/Adechenko.jpg'),
+                  builder: (context, child) => FadeTransition(
+                    opacity: userOpacity,
+                    child: child
+                  ),
+                ),
+                SizedBox(width: 6),
+                AnimatedBuilder(
+                  animation: controller,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(name, style: AppStyles.h2Black),
+                      Text(userName,
+                          style: AppStyles.h5Black
+                              .copyWith(color: AppColors.manatee)),
+                    ],
+                  ),
+                  builder: (context, child) => FadeTransition(
+                    opacity: columnOpacity,
+                    child: child
+                  )
+                )
+              ],
+            ),
+          ],
+        ),
     );
   }
 
@@ -149,5 +194,4 @@ class _FullScreenImageState extends State<FullScreenImage> {
       ],
     );
   }
-
 }
