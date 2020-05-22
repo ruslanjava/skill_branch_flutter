@@ -72,7 +72,7 @@ class _FullScreenImageState extends State<FullScreenImage>
 
   @override
   void dispose() {
-    controller.dispose();
+    try { controller.dispose(); } on Exception {}
     super.dispose();
   }
 
