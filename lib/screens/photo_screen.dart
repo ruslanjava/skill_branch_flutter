@@ -67,12 +67,20 @@ class _FullScreenImageState extends State<FullScreenImage>
         CurvedAnimation(parent: controller, curve: Interval(0.5, 1.0, curve: Curves.ease))
     );
 
-    controller.forward().orCancel;
+    _playAnimation();
+  }
+
+  Future<void> _playAnimation() async {
+    try {
+      await controller.forward().orCancel;
+    } on TickerCanceled {
+      // the animation got canceled, probably because it was disposed of
+    }
   }
 
   @override
   void dispose() {
-    try { controller.dispose(); } catch (Exception) {}
+    controller.dispose();
     super.dispose();
   }
 
