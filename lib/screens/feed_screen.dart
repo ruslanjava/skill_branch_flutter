@@ -43,6 +43,7 @@ class _FeedState extends State<Feed> {
                   altDescription: 'This is Flutter dash. I love him :)',
                   name: 'Kirill Adeshchennko',
                   userName: 'kaparray',
+                  userPhoto: 'https://skill-branch.ru/img/speakers/Adechenko.jpg',
                   heroTag: "$index",
                 )
               )

@@ -11,12 +11,14 @@ class FullScreenImage extends StatefulWidget {
       this.altDescription,
       this.name,
       this.userName,
+      this.userPhoto,
       this.heroTag})
       : super(key: key);
 
   final String photo;
   final String altDescription;
   final String userName;
+  final String userPhoto;
   final String name;
   final String heroTag;
 
@@ -33,6 +35,7 @@ class _FullScreenImageState extends State<FullScreenImage>
   String photo;
   String name;
   String userName;
+  String userPhoto;
   String altDescription;
   String heroTag;
 
@@ -47,6 +50,7 @@ class _FullScreenImageState extends State<FullScreenImage>
     photo = widget.photo != null ? widget.photo : kFlutterDash;
     name = widget.name != null ? widget.name : '';
     userName = widget.userName != null ? '@' + widget.userName : '';
+    userPhoto = widget.userPhoto != null ? widget.userPhoto : 'https://skill-branch.ru/img/speakers/Adechenko.jpg';
     altDescription = widget.altDescription != null ? widget.altDescription : '';
     heroTag = widget.heroTag;
 
@@ -118,7 +122,7 @@ class _FullScreenImageState extends State<FullScreenImage>
               children: <Widget>[
                 AnimatedBuilder(
                   animation: controller,
-                  child: UserAvatar('https://skill-branch.ru/img/speakers/Adechenko.jpg'),
+                  child: UserAvatar(userPhoto),
                   builder: (context, child) => FadeTransition(
                     opacity: userOpacity,
                     child: child
