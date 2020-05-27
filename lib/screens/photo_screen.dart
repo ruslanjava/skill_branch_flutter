@@ -3,6 +3,27 @@ import 'package:FlutterGalleryApp/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+class FullScreenImageArguments {
+
+  FullScreenImageArguments({
+    this.photo,
+    this.altDescription,
+    this.userName,
+    this.userPhoto,
+    this.name,
+    this.heroTag,
+    this.key
+});
+
+  final String photo;
+  final String altDescription;
+  final String userName;
+  final String userPhoto;
+  final String name;
+  final String heroTag;
+  final Key key;
+}
+
 class FullScreenImage extends StatefulWidget {
 
   FullScreenImage(
