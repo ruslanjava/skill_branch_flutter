@@ -27,9 +27,9 @@ class MyApp extends StatelessWidget {
           );
 
           if (Platform.isAndroid) {
-            return MaterialPageRoute(builder: (context) => route);
+            return MaterialPageRoute(builder: (context) => route, settings: args.routeSettings);
           } else if (Platform.isIOS) {
-            return CupertinoPageRoute(builder: (context) => route);
+            return CupertinoPageRoute(builder: (context) => route, settings: args.routeSettings);
           }
 
           return MaterialPageRoute(builder: (context) => route);

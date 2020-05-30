@@ -12,7 +12,8 @@ class FullScreenImageArguments {
     this.userPhoto,
     this.name,
     this.heroTag,
-    this.key
+    this.key,
+    this.routeSettings,
 });
 
   final String photo;
@@ -22,6 +23,7 @@ class FullScreenImageArguments {
   final String name;
   final String heroTag;
   final Key key;
+  final RouteSettings routeSettings;
 }
 
 class FullScreenImage extends StatefulWidget {
@@ -108,18 +110,30 @@ class _FullScreenImageState extends State<FullScreenImage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          backgroundColor: Colors.white,
-          centerTitle: true,
-          title: Text('Photo',
-              style: AppStyles.h2Black.copyWith(fontWeight: FontWeight.bold)),
-          leading: IconButton(
-            icon: Icon(CupertinoIcons.back, color: AppColors.grayChateau),
-            onPressed: () => Navigator.of(context).pop(true),
-          )),
+      appBar: _buildAppBar(),
       body: Column(children: <Widget>[
         _buildItem(),
       ]),
+    );
+  }
+
+  AppBar _buildAppBar() {
+    String title = ModalRoute.of(context).settings.arguments;
+    return AppBar(
+      elevation: 0,
+      leading: IconButton(
+        icon: Icon(
+          CupertinoIcons.back,
+          color: AppColors.grayChateau,
+        ),
+        onPressed: () => Navigator.pop(context),
+      ),
+      backgroundColor: AppColors.white,
+      centerTitle: true,
+      title: Text(
+          title,
+          style: AppStyles.h2Black
+      ),
     );
   }
 

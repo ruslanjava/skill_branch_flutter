@@ -1,5 +1,6 @@
 import 'package:FlutterGalleryApp/res/res.dart';
 import 'package:FlutterGalleryApp/widgets/widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'photo_screen.dart';
@@ -33,28 +34,27 @@ class _FeedState extends State<Feed> {
   }
 
   Widget _buildItem(int index) {
+    final heroTag = 'feedItem_$index';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, '/fullScreenImage', arguments: FullScreenImageArguments(
-              altDescription: 'This is Flutter dash. I love him :)',
-              name: 'Kirill Adeshchennko',
-              userName: 'kaparray',
-              userPhoto: 'https://skill-branch.ru/img/speakers/Adechenko.jpg',
-              heroTag: "$index",
-            ));
-            /*Navigator.push(context, MaterialPageRoute(
-                builder: (context) => FullScreenImage(
+            Navigator.pushNamed(
+                context,
+                '/fullScreenImage',
+                arguments: FullScreenImageArguments(
+                  routeSettings: RouteSettings(
+                    arguments: 'Some title',
+                  ),
+                  photo: kFlutterDash,
                   altDescription: 'This is Flutter dash. I love him :)',
-                  name: 'Kirill Adeshchennko',
                   userName: 'kaparray',
+                  name: 'Kirill Adeshchennko',
                   userPhoto: 'https://skill-branch.ru/img/speakers/Adechenko.jpg',
-                  heroTag: "$index",
-                )
-              )
-            );*/
+                  heroTag: heroTag,
+              ),
+            );
           },
           child: Hero(tag: "$index", child: Photo(photoLink: kFlutterDash))
         ),
