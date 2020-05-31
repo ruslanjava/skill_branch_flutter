@@ -118,9 +118,31 @@ class _FullScreenImageState extends State<FullScreenImage>
   }
 
   AppBar _buildAppBar() {
-    String title = ModalRoute.of(context).settings.arguments;
     return AppBar(
       elevation: 0,
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(
+            Icons.more_vert,
+            color: AppColors.grayChateau,
+          ),
+          onPressed: () {
+            showModalBottomSheet(context: context, builder: (context) {
+              return Container(
+                decoration: BoxDecoration(
+                  color: AppColors.mercury,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: List.generate(10, (index) => FlutterLogo()),
+                ),
+              );
+            });
+          }
+        ),
+      ],
       leading: IconButton(
         icon: Icon(
           CupertinoIcons.back,
@@ -131,7 +153,7 @@ class _FullScreenImageState extends State<FullScreenImage>
       backgroundColor: AppColors.white,
       centerTitle: true,
       title: Text(
-          title,
+          'Photo',
           style: AppStyles.h2Black
       ),
     );
