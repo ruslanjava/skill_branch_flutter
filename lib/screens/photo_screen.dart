@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class FullScreenImageArguments {
-
   FullScreenImageArguments({
     this.photo,
     this.altDescription,
@@ -14,7 +13,7 @@ class FullScreenImageArguments {
     this.heroTag,
     this.key,
     this.routeSettings,
-});
+  });
 
   final String photo;
   final String altDescription;
@@ -27,15 +26,13 @@ class FullScreenImageArguments {
 }
 
 class FullScreenImage extends StatefulWidget {
-
-  FullScreenImage(
-      {Key key,
-      this.photo,
-      this.altDescription,
-      this.name,
-      this.userName,
-      this.userPhoto,
-      this.heroTag})
+  FullScreenImage({Key key,
+    this.photo,
+    this.altDescription,
+    this.name,
+    this.userName,
+    this.userPhoto,
+    this.heroTag})
       : super(key: key);
 
   final String photo;
@@ -49,12 +46,10 @@ class FullScreenImage extends StatefulWidget {
   State<StatefulWidget> createState() {
     return _FullScreenImageState();
   }
-
 }
 
 class _FullScreenImageState extends State<FullScreenImage>
     with TickerProviderStateMixin {
-
   String photo;
   String name;
   String userName;
@@ -73,7 +68,9 @@ class _FullScreenImageState extends State<FullScreenImage>
     photo = widget.photo != null ? widget.photo : kFlutterDash;
     name = widget.name != null ? widget.name : '';
     userName = widget.userName != null ? '@' + widget.userName : '';
-    userPhoto = widget.userPhoto != null ? widget.userPhoto : 'https://skill-branch.ru/img/speakers/Adechenko.jpg';
+    userPhoto = widget.userPhoto != null
+        ? widget.userPhoto
+        : 'https://skill-branch.ru/img/speakers/Adechenko.jpg';
     altDescription = widget.altDescription != null ? widget.altDescription : '';
     heroTag = widget.heroTag;
 
@@ -82,20 +79,20 @@ class _FullScreenImageState extends State<FullScreenImage>
       vsync: this,
     );
 
-    userOpacity = Tween<double>(begin: 0, end: 1).animate(
-        CurvedAnimation(parent: controller, curve: Interval(0.0, 0.5, curve: Curves.ease))
-    );
+    userOpacity = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
+        parent: controller, curve: Interval(0.0, 0.5, curve: Curves.ease)));
 
-    columnOpacity = Tween<double>(begin: 0, end: 1).animate(
-        CurvedAnimation(parent: controller, curve: Interval(0.5, 1.0, curve: Curves.ease))
-    );
+    columnOpacity = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
+        parent: controller, curve: Interval(0.5, 1.0, curve: Curves.ease)));
 
     _playAnimation();
   }
 
   Future<void> _playAnimation() async {
     try {
-      await controller.forward().orCancel;
+      await controller
+          .forward()
+          .orCancel;
     } on TickerCanceled {
       // the animation got canceled, probably because it was disposed of
     }
@@ -122,26 +119,30 @@ class _FullScreenImageState extends State<FullScreenImage>
       elevation: 0,
       actions: <Widget>[
         IconButton(
-          icon: Icon(
-            Icons.more_vert,
-            color: AppColors.grayChateau,
-          ),
-          onPressed: () {
-            showModalBottomSheet(context: context, builder: (context) {
-              return Container(
-                decoration: BoxDecoration(
-                  color: AppColors.mercury,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: List.generate(10, (index) => FlutterLogo()),
-                ),
-              );
-            });
-          }
-        ),
+            icon: Icon(
+              Icons.more_vert,
+              color: AppColors.grayChateau,
+            ),
+            onPressed: () {
+              showModalBottomSheet(
+                  shape: RoundedRectangleBorder(),
+                  context: context,
+                  builder: (context) {
+                    return ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: AppColors.mercury,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children:
+                            List.generate(10, (index) => FlutterLogo()),
+                          ),
+                        ));
+                  });
+            }),
       ],
       leading: IconButton(
         icon: Icon(
@@ -152,10 +153,7 @@ class _FullScreenImageState extends State<FullScreenImage>
       ),
       backgroundColor: AppColors.white,
       centerTitle: true,
-      title: Text(
-          'Photo',
-          style: AppStyles.h2Black
-      ),
+      title: Text('Photo', style: AppStyles.h2Black),
     );
   }
 
@@ -172,29 +170,27 @@ class _FullScreenImageState extends State<FullScreenImage>
               style: AppStyles.h3.copyWith(color: AppColors.grayChateau)),
         ),
         _buildPhotoMeta(),
-        _buildButtons(),
+        _buildActionButtons(),
       ],
     );
   }
 
   Widget _buildPhotoMeta() {
-      return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                AnimatedBuilder(
-                  animation: controller,
-                  child: UserAvatar(userPhoto),
-                  builder: (context, child) => FadeTransition(
-                    opacity: userOpacity,
-                    child: child
-                  ),
-                ),
-                SizedBox(width: 6),
-                AnimatedBuilder(
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              AnimatedBuilder(
+                animation: controller,
+                child: UserAvatar(userPhoto),
+                builder: (context, child) =>
+                    FadeTransition(opacity: userOpacity, child: child),
+              ),
+              SizedBox(width: 6),
+              AnimatedBuilder(
                   animation: controller,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -205,62 +201,74 @@ class _FullScreenImageState extends State<FullScreenImage>
                               .copyWith(color: AppColors.manatee)),
                     ],
                   ),
-                  builder: (context, child) => FadeTransition(
-                    opacity: columnOpacity,
-                    child: child
-                  )
-                )
-              ],
-            ),
-          ],
-        ),
+                  builder: (context, child) =>
+                      FadeTransition(opacity: columnOpacity, child: child))
+            ],
+          ),
+        ],
+      ),
     );
   }
 
-  Widget _buildButtons() {
-    return Row(
-      // crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: <Widget>[
-        LikeButton(likeCount: 10, isLiked: true),
-        GestureDetector(
-          child: Container(
-            decoration: BoxDecoration(
-              color: AppColors.dodgerBlue,
-              borderRadius: BorderRadius.circular(7),
-            ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 7),
-              child: Text(
-                'Save',
-                style: AppStyles.h3.copyWith(color: AppColors.white),
-              ),
-            ),
+  Widget _buildActionButtons() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          LikeButton(likeCount: 10, isLiked: true),
+          SizedBox(
+            width: 14,
           ),
-          onTap: () {
-            setState(() {});
-          },
-        ),
-        GestureDetector(
-          child: Container(
-            decoration: BoxDecoration(
-              color: AppColors.dodgerBlue,
-              borderRadius: BorderRadius.circular(7),
-            ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 7),
-              child: Text(
-                'Visit',
-                style: AppStyles.h3.copyWith(color: AppColors.white),
-              ),
-            ),
+          Expanded(
+            child: _buildButton('Save'),
           ),
-          onTap: () {
-            setState(() {});
-          },
-        ),
-      ],
+          const SizedBox(width: 12),
+          Expanded(
+            child: _buildButton('Visit'),
+          )
+        ],
+      ),
     );
   }
+
+  Widget _buildButton(String text) {
+    return GestureDetector(
+      onTap: () {
+        showDialog(
+          context: context, builder: (context) => AlertDialog(
+            title: Text('Alert Dialog title'),
+            content: Text('Alert Dialog body'),
+            actions: <Widget>[
+              FlatButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('Ok'),
+              ),
+              FlatButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('Cancel'),
+              ),
+            ],
+          )
+        );
+      },
+      child: Container(
+        alignment: Alignment.center,
+        height: 36,
+        decoration: BoxDecoration(
+          color: AppColors.dodgerBlue,
+          borderRadius: BorderRadius.circular(7),
+        ),
+        child: Text(
+          text,
+          style: AppStyles.h4.copyWith(color: AppColors.white),
+        ),
+      ),
+    );
+  }
+
 }
