@@ -260,7 +260,7 @@ class _FullScreenImageState extends State<FullScreenImage>
           ),
           const SizedBox(width: 12),
           Expanded(
-            child: _buildButton('Visit', () {
+            child: _buildButton('Visit', () async {
               OverlayState overlayState = Overlay.of(context);
 
               OverlayEntry overlayEntry = OverlayEntry(builder: (BuildContext context) {
@@ -272,6 +272,8 @@ class _FullScreenImageState extends State<FullScreenImage>
                       alignment: Alignment.center,
                       width: MediaQuery.of(context).size.width,
                       child: Container(
+                        margin: EdgeInsets.symmetric(horizontal: 20),
+                        padding: EdgeInsets.fromLTRB(16, 10, 16, 10),
                         decoration: BoxDecoration(color: AppColors.mercury, borderRadius: BorderRadius.circular(12)),
                         child: Text('SkillBranch'),
                       )
@@ -281,6 +283,8 @@ class _FullScreenImageState extends State<FullScreenImage>
               });
 
               overlayState.insert(overlayEntry);
+              await Future.delayed(Duration(seconds: 1));
+              overlayEntry.remove();
             }),
           )
         ],
