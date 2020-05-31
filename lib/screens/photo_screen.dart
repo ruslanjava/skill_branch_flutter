@@ -125,11 +125,12 @@ class _FullScreenImageState extends State<FullScreenImage>
             ),
             onPressed: () {
               showModalBottomSheet(
-                  shape: RoundedRectangleBorder(),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   context: context,
                   builder: (context) {
                     return ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
                         child: Container(
                           decoration: BoxDecoration(
                             color: AppColors.mercury,
@@ -221,41 +222,75 @@ class _FullScreenImageState extends State<FullScreenImage>
             width: 14,
           ),
           Expanded(
-            child: _buildButton('Save'),
+            child: GestureDetector(
+              onTap: () {
+                showDialog(
+                    context: context, builder: (context) => AlertDialog(
+                  title: Text('Alert Dialog title'),
+                  content: Text('Alert Dialog body'),
+                  actions: <Widget>[
+                    FlatButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('Ok'),
+                    ),
+                    FlatButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('Cancel'),
+                    ),
+                  ],
+                ));
+              },
+              child: Container(
+                alignment: Alignment.center,
+                height: 36,
+                decoration: BoxDecoration(
+                  color: AppColors.dodgerBlue,
+                  borderRadius: BorderRadius.circular(7),
+                ),
+                child: Text(
+                  'Save',
+                  style: AppStyles.h4.copyWith(color: AppColors.white),
+                ),
+              ),
+            ),
           ),
           const SizedBox(width: 12),
           Expanded(
-            child: _buildButton('Visit'),
+            child: _buildButton('Visit', () {
+              OverlayState overlayState = Overlay.of(context);
+
+              OverlayEntry overlayEntry = OverlayEntry(builder: (BuildContext context) {
+                return Positioned(
+                  top: MediaQuery.of(context).viewInsets.top + 50,
+                  child: Material(
+                    color: Colors.transparent,
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: MediaQuery.of(context).size.width,
+                      child: Container(
+                        decoration: BoxDecoration(color: AppColors.mercury, borderRadius: BorderRadius.circular(12)),
+                        child: Text('SkillBranch'),
+                      )
+                    ),
+                  )
+                );
+              });
+
+              overlayState.insert(overlayEntry);
+            }),
           )
         ],
       ),
     );
   }
 
-  Widget _buildButton(String text) {
+  Widget _buildButton(String text, VoidCallback callback) {
     return GestureDetector(
-      onTap: () {
-        showDialog(
-          context: context, builder: (context) => AlertDialog(
-            title: Text('Alert Dialog title'),
-            content: Text('Alert Dialog body'),
-            actions: <Widget>[
-              FlatButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('Ok'),
-              ),
-              FlatButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('Cancel'),
-              ),
-            ],
-          )
-        );
-      },
+      onTap: callback,
       child: Container(
         alignment: Alignment.center,
         height: 36,
