@@ -4,6 +4,7 @@ import 'package:FlutterGalleryApp/screens/photo_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'res/styles.dart';
 import 'screens/home.dart';
 
 class MyApp extends StatelessWidget {
@@ -11,7 +12,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(),
+      theme: ThemeData(
+        textTheme: AppStyles.buildAppTextTheme()
+      ),
       debugShowCheckedModeBanner: false,
       onGenerateRoute: (RouteSettings settings) {
         if (settings.name == '/fullScreenImage') {

@@ -154,7 +154,7 @@ class _FullScreenImageState extends State<FullScreenImage>
       ),
       backgroundColor: AppColors.white,
       centerTitle: true,
-      title: Text('Photo', style: AppStyles.h2Black),
+      title: Text('Photo', style: Theme.of(context).textTheme.headline2),
     );
   }
 
@@ -168,7 +168,7 @@ class _FullScreenImageState extends State<FullScreenImage>
           child: Text(altDescription,
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
-              style: AppStyles.h3.copyWith(color: AppColors.grayChateau)),
+              style: Theme.of(context).textTheme.headline3.copyWith(color: AppColors.grayChateau)),
         ),
         _buildPhotoMeta(),
         _buildActionButtons(),
@@ -196,10 +196,11 @@ class _FullScreenImageState extends State<FullScreenImage>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(name, style: AppStyles.h2Black),
-                      Text(userName,
-                          style: AppStyles.h5Black
-                              .copyWith(color: AppColors.manatee)),
+                      Text(name, style: Theme.of(context).textTheme.headline2),
+                      Text(
+                          userName,
+                          style: Theme.of(context).textTheme.headline5.copyWith(color: AppColors.manatee)
+                      ),
                     ],
                   ),
                   builder: (context, child) =>
@@ -253,7 +254,7 @@ class _FullScreenImageState extends State<FullScreenImage>
                 ),
                 child: Text(
                   'Save',
-                  style: AppStyles.h4.copyWith(color: AppColors.white),
+                  style: Theme.of(context).textTheme.headline4.copyWith(color: AppColors.white),
                 ),
               ),
             ),
@@ -304,7 +305,7 @@ class _FullScreenImageState extends State<FullScreenImage>
         ),
         child: Text(
           text,
-          style: AppStyles.h4.copyWith(color: AppColors.white),
+          style: Theme.of(context).textTheme.headline4.copyWith(color: AppColors.white),
         ),
       ),
     );

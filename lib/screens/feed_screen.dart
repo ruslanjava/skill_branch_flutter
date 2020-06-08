@@ -64,7 +64,7 @@ class _FeedState extends State<Feed> {
           child: Text('This is Flutter dash. I love him :)',
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
-              style: AppStyles.h3.copyWith(color: AppColors.grayChateau)),
+              style: Theme.of(context).textTheme.headline3.copyWith(color: AppColors.grayChateau)),
         ),
       ],
     );
@@ -83,10 +83,14 @@ class _FeedState extends State<Feed> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text('Kirill Adeshchennko', style: AppStyles.h2Black),
-                  Text('@kaparray',
-                      style:
-                      AppStyles.h5Black.copyWith(color: AppColors.manatee)),
+                  Text(
+                      'Kirill Adeshchennko',
+                      style: Theme.of(context).textTheme.headline2
+                  ),
+                  Text(
+                    '@kaparray',
+                    style: Theme.of(context).textTheme.headline5.copyWith(color: AppColors.manatee),
+                  ),
                 ],
               )
             ],
