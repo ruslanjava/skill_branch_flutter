@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
           FullScreenImageArguments args = settings.arguments as FullScreenImageArguments;
           final route = FullScreenImage(
             photo: args.photo,
-            userName: args.photo,
+            userName: args.userName,
             altDescription: args.altDescription,
             name: args.name,
             userPhoto: args.photo,
