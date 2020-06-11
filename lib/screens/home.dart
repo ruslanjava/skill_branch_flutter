@@ -2,7 +2,6 @@ import 'package:FlutterGalleryApp/res/res.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'demo_screen.dart';
 import 'feed_screen.dart';
 
 class Home extends StatefulWidget {
@@ -30,7 +29,7 @@ class _HomeState extends State<Home> {
         curve: Curves.ease,
         onItemSelected: (int index) async {
           if (index == 1) {
-            var value = await Navigator.push(context, MaterialPageRoute(builder: (context) => DemoScreen()));
+            var value = await Navigator.push(context, MaterialPageRoute(builder: (context) => Feed()));
             print(value);
           } else {
             setState(() {
