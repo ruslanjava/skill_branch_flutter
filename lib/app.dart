@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:FlutterGalleryApp/screens/photo_screen.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
           FullScreenImageArguments args = settings.arguments as FullScreenImageArguments;
           final route = FullScreenImage(
             photo: args.photo,
-            userName: args.photo,
+            userName: args.userName,
             altDescription: args.altDescription,
             name: args.name,
             userPhoto: args.photo,
@@ -38,8 +39,33 @@ class MyApp extends StatelessWidget {
           return MaterialPageRoute(builder: (context) => route);
         }
       },
-      home: Home(),
+      home: Home(Connectivity().onConnectivityChanged),
     );
   }
+}
+
+class ConnectivityOverlay {
+  static final ConnectivityOverlay _singleton = ConnectivityOverlay._internal();
+
+  factory ConnectivityOverlay() {
+    return _singleton;
+  }
+
+  ConnectivityOverlay._internal();
+
+  static OverlayEntry overlayEntry;
+
+  void showOverlay(BuildContext context, Widget child) {
+    if (overlayEntry != null) {
+      overlayEntry.remove();
+    }
+    overlayEntry = OverlayEntry(builder: (context) => child);
+    Overlay.of(context).insert(overlayEntry);
+  }
+
+  void removeOverlay(BuildContext context) {
+    overlayEntry.remove();
+  }
+
 }
 

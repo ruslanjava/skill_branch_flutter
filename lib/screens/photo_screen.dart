@@ -1,7 +1,9 @@
 import 'package:FlutterGalleryApp/res/res.dart';
+import 'package:FlutterGalleryApp/widgets/claim_bottom_sheet.dart';
 import 'package:FlutterGalleryApp/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 
 import 'feed_screen.dart';
 
@@ -131,20 +133,8 @@ class _FullScreenImageState extends State<FullScreenImage>
                     borderRadius: BorderRadius.circular(10),
                   ),
                   context: context,
-                  builder: (context) {
-                    return ClipRRect(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: AppColors.mercury,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.min,
-                            children:
-                            List.generate(10, (index) => FlutterLogo()),
-                          ),
-                        ));
-                  });
+                  builder: (context) => ClaimBottomSheet(),
+              );
             }),
       ],
       leading: IconButton(
@@ -229,20 +219,25 @@ class _FullScreenImageState extends State<FullScreenImage>
               onTap: () {
                 showDialog(
                     context: context, builder: (context) => AlertDialog(
-                  title: Text('Alert Dialog title'),
-                  content: Text('Alert Dialog body'),
+                  title: Text('Downloading photos'),
+                  content: Text('Are you sure you want to upload a photo?'),
                   actions: <Widget>[
                     FlatButton(
                       onPressed: () {
+                        GallerySaver.saveImage(photo).then((bool success) {
+                          setState(() {
+                            print('Image is saved');
+                          });
+                        });
                         Navigator.of(context).pop();
                       },
-                      child: Text('Ok'),
+                      child: Text('Download'),
                     ),
                     FlatButton(
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: Text('Cancel'),
+                      child: Text('Close'),
                     ),
                   ],
                 ));
