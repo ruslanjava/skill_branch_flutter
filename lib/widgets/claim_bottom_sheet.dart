@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class ClaimBottomSheet extends StatelessWidget {
 
-  final List<String> items = [ "adult", "harm", "bully", "spam", "copyright", "hate"];
+  final List<String> items = [ "ADULT", "HARM", "BULLY", "SPAM", "COPYRIGHT", "HATE" ];
 
   @override
   Widget build(BuildContext context) {
