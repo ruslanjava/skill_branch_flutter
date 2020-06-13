@@ -51,7 +51,7 @@ class _HomeState extends State<Home> {
                       margin: EdgeInsets.symmetric(horizontal: 20),
                       padding: EdgeInsets.fromLTRB(16, 10, 16, 10),
                       decoration: BoxDecoration(color: AppColors.mercury, borderRadius: BorderRadius.circular(12)),
-                      child: Text('No Internet connection'),
+                      child: Text('No internet connection'),
                     )
                 ),
               )
