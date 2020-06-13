@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 
 import 'colors.dart';
 
-class AppStyles {
+TextTheme buildAppTextTheme() {
+  return new TextTheme(
+      headline1: AppStyles.h1Black,
+      headline2: AppStyles.h2Black,
+      headline3: AppStyles.h3,
+      headline4: AppStyles.h4,
+      headline5: AppStyles.h5Black,
+      headline6: AppStyles.h6
+  );
+}
 
-  static TextTheme buildAppTextTheme() {
-    return new TextTheme(
-      headline1: h1Black,
-      headline2: h2Black,
-      headline3: h3,
-      headline4: h4,
-      headline5: h5Black,
-      headline6: h6
-    );
-  }
+class AppStyles {
 
   static const h6 = TextStyle(
     fontSize: 12,
