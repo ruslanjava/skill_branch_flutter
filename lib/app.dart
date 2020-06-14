@@ -56,9 +56,6 @@ class ConnectivityOverlay {
   static OverlayEntry overlayEntry;
 
   void showOverlay(BuildContext context, Widget child) {
-    if (overlayEntry != null) {
-      overlayEntry.remove();
-    }
     overlayEntry = OverlayEntry(builder: (context) => child);
     Overlay.of(context).insert(overlayEntry);
   }
