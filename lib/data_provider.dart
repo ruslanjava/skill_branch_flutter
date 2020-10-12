@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'models/auth/model.dart';
-import 'models/photo_list/model.dart';
+import 'models/photo.dart';
 import 'package:http/http.dart' as http;
 
 /*
@@ -48,13 +48,13 @@ class DataProvider {
     throw Exception('Error: ${response.reasonPhrase}');
   }
 
-  static Future<PhotoList> getPhotos(int page, int perPage) async {
+  static Future<Photos> getPhotos(int page, int perPage) async {
     var response = await http.get(
         'https://api.unsplash.com/photos?page=$page&per_page=$perPage',
         headers: {'Authorization': 'Bearer $authToken'});
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      return PhotoList.fromJson(json.decode(response.body));
+      return Photos.fromJson(json.decode(response.body));
     }
     throw Exception('Error: ${response.reasonPhrase}');
   }
@@ -70,13 +70,13 @@ class DataProvider {
     throw Exception('Error: ${response.reasonPhrase}');
   }
 
-  static Future<PhotoList> searchPhotos(String keyword, int page, int pageSize) async {
+  static Future<Photos> searchPhotos(String keyword, int page, int pageSize) async {
     var response = await http.get(
         'https://api.unsplash.com/search/photos?query=$keyword&page=$page&per_page=$pageSize',
         headers: {'Authorization': 'Bearer $authToken'});
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      return PhotoList.fromJson(json.decode(response.body));
+      return Photos.fromJson(json.decode(response.body));
     }
     throw Exception('Error: ${response.reasonPhrase}');
   }

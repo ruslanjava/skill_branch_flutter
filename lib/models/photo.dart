@@ -1,9 +1,9 @@
-class PhotoList {
+class Photos {
   List<Photo> photos;
 
-  PhotoList({this.photos});
+  Photos({this.photos});
 
-  PhotoList.fromJson(List<dynamic> json) {
+  Photos.fromJson(List<dynamic> json) {
     photos = List<Photo>();
     json.forEach((value) {
       photos.add(Photo.fromJson(value as Map<String, dynamic>));
