@@ -2,9 +2,9 @@ import 'package:FlutterGalleryApp/res/res.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-class Photo extends StatelessWidget {
+class PhotoWidget extends StatelessWidget {
 
-  Photo({this.photoLink, Key key}) : super(key: key);
+  PhotoWidget({this.photoLink, Key key}) : super(key: key);
 
   final String photoLink;
 

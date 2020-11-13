@@ -22,7 +22,7 @@ class _HomeState extends State<Home> {
   StreamSubscription subscription;
 
   List<Widget> pages = [
-    Feed(key: PageStorageKey('FeedPage')),
+    FeedScreen(key: PageStorageKey('FeedPage')),
     Container(),
     Container(),
   ];
@@ -71,7 +71,7 @@ class _HomeState extends State<Home> {
           onItemSelected: (int index) async {
             if (index == 1) {
               var value = await Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Feed()));
+                  context, MaterialPageRoute(builder: (context) => FeedScreen()));
               print(value);
             } else {
               setState(() {

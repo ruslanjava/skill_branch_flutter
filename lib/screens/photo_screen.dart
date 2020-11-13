@@ -5,7 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 
-import 'feed_screen.dart';
+const String kFlutterDash =
+    'https://flutter.dev/assets/404/dash_nest-c64796b59b65042a2b40fae5764c13b7477a592db79eaf04c86298dcb75b78ea.png';
 
 class FullScreenImageArguments {
   FullScreenImageArguments({
@@ -154,7 +155,7 @@ class _FullScreenImageState extends State<FullScreenImage>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Hero(tag: "$heroTag", child: Photo(photoLink: photo)),
+        Hero(tag: "$heroTag", child: PhotoWidget(photoLink: photo)),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           child: Text(altDescription,

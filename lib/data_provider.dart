@@ -23,6 +23,8 @@ import 'package:http/http.dart' as http;
 
 class DataProvider {
 
+  static const oneTimeCode = "NrhVQLE0zVr8ANDELGW5Ljf7vrUk7HgORxwxibd-oRs";
+
   static const String _appId = "157965"; //not used, just for info
   static String authToken = ""; // "UmL3rmxWT8NtRFbxKE6CYIJktLR2rtuBEI4CfevUXxs";
   static const String _accessKey =
@@ -34,7 +36,7 @@ class DataProvider {
   static const String authUrl =
       'https://unsplash.com/oauth/authorize?client_id=$_accessKey&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&response_type=code&scope=public+write_likes'; //authorize url from https://unsplash.com/oauth/applications/{your_app_id}
 
-  static Future<Auth> doLogin({String oneTimeCode}) async {
+  static Future<Auth> doLogin(String oneTimeCode) async {
     var response = await http.post('https://unsplash.com/oauth/token',
         headers: {
           'Content-Type': 'application/json',
@@ -49,6 +51,11 @@ class DataProvider {
   }
 
   static Future<Photos> getPhotos(int page, int perPage) async {
+    if (authToken.isEmpty) {
+      var auth = await doLogin(oneTimeCode);
+      authToken = auth.accessToken;
+    }
+
     var response = await http.get(
         'https://api.unsplash.com/photos?page=$page&per_page=$perPage',
         headers: {'Authorization': 'Bearer $authToken'});

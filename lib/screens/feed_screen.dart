@@ -1,31 +1,56 @@
+import 'package:FlutterGalleryApp/models/photo.dart';
 import 'package:FlutterGalleryApp/res/res.dart';
 import 'package:FlutterGalleryApp/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../data_provider.dart';
 import 'photo_screen.dart';
 
-const String kFlutterDash =
-    'https://flutter.dev/assets/404/dash_nest-c64796b59b65042a2b40fae5764c13b7477a592db79eaf04c86298dcb75b78ea.png';
+class FeedScreen extends StatefulWidget {
 
-class Feed extends StatefulWidget {
-
-  Feed({Key key}) : super(key: key);
+  FeedScreen({Key key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _FeedState();
+    return _FeedScreenState();
   }
 
 }
 
-class _FeedState extends State<Feed> {
+class _FeedScreenState extends State<FeedScreen> {
+
+  ScrollController _scrollController = ScrollController();
+  int page = 1;
+  bool isLoading = false;
+  List<Photo> loadedPhotos = List<Photo>();
+
+
+  Future<List<Photo>> _callAPI() async {
+    isLoading = true;
+    Photos photos = await DataProvider.getPhotos(page, 10);
+    loadedPhotos.addAll(photos.photos);
+    page++;
+    isLoading = false;
+    return loadedPhotos;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_scrollListener);
+    _callAPI().then((data){
+      setState(() {
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: ListView.builder(
-            itemCount: 10,
+            itemCount: loadedPhotos == null ? 0 : loadedPhotos.length,
+            controller: _scrollController,
             itemBuilder: (BuildContext context, int index) {
               return Column(children: <Widget>[
                 _buildItem(index),
@@ -36,8 +61,17 @@ class _FeedState extends State<Feed> {
     );
   }
 
+  _scrollListener() {
+    if (_scrollController.position.extentAfter <= 0 && !isLoading) {
+      _callAPI().then((data){
+        setState(() {
+        });
+      });
+    }
+  }
+
   Widget _buildItem(int index) {
-    final heroTag = 'feedItem_$index';
+    Photo photo = loadedPhotos[index];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -50,18 +84,18 @@ class _FeedState extends State<Feed> {
                   routeSettings: RouteSettings(
                     arguments: 'Some title',
                   ),
-                  photo: kFlutterDash,
-                  altDescription: 'This is Flutter dash. I love him :)',
-                  userName: 'kaparray',
-                  name: 'Kirill Adeshchennko',
-                  userPhoto: 'https://skill-branch.ru/img/speakers/Adechenko.jpg',
-                  heroTag: heroTag,
+                  photo: photo.urls.regular,
+                  altDescription: photo.altDescription,
+                  userName: photo.user.username,
+                  name: photo.user.name,
+                  userPhoto: photo.user.profileImage.medium,
+                  heroTag: photo.urls.regular,
               ),
             );
           },
-          child: Hero(tag: "$index", child: Photo(photoLink: kFlutterDash))
+          child: Hero(tag: photo.urls.regular, child: PhotoWidget(photoLink: photo.urls.full))
         ),
-        _buildPhotoMeta(),
+        _buildPhotoMeta(photo),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           child: Text('This is Flutter dash. I love him :)',
@@ -73,7 +107,7 @@ class _FeedState extends State<Feed> {
     );
   }
 
-  Widget _buildPhotoMeta() {
+  Widget _buildPhotoMeta(Photo photo) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       child: Row(
@@ -81,24 +115,24 @@ class _FeedState extends State<Feed> {
         children: <Widget>[
           Row(
             children: <Widget>[
-              UserAvatar('https://skill-branch.ru/img/speakers/Adechenko.jpg'),
+              UserAvatar(photo.user.profileImage.medium),
               SizedBox(width: 6),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                      'Kirill Adeshchennko',
+                      photo.user.name,
                       style: Theme.of(context).textTheme.headline2
                   ),
                   Text(
-                    '@kaparray',
+                    photo.user.username,
                     style: Theme.of(context).textTheme.headline5.copyWith(color: AppColors.manatee),
                   ),
                 ],
               )
             ],
           ),
-          LikeButton(likeCount: 10, isLiked: true),
+          LikeButton(likeCount: photo.likes, isLiked: photo.likedByUser),
         ],
       ),
     );
